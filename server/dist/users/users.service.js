@@ -41,9 +41,8 @@ let UsersService = class UsersService {
     }
     async delete(id) {
         try {
-            const deletedUser = await this.userModel.findById(id);
-            await deletedUser.delete();
-            return deletedUser;
+            await this.userModel.findByIdAndDelete(id);
+            return `${id}`;
         }
         catch (error) {
             throw new common_1.HttpException("Bad Request", common_1.HttpStatus.BAD_REQUEST);

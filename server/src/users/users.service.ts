@@ -3,40 +3,39 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model, ObjectId } from "mongoose";
 import { hash } from 'bcrypt';
 import { User, UserDocument } from "src/schemas/user.schema";
-import IUser from "src/utils/interfaces/User.interface";
 import CreateUserDTO from "./dto/create-user.dto";
+import GetUserDTO from "./dto/get-user.dto";
 @Injectable()
 export default class UsersService {
     constructor(@InjectModel(User.name) private userModel:Model<UserDocument>){}
-    async getAll():Promise<IUser[] | HttpException>{
+    async getAll():Promise<GetUserDTO[] | HttpException>{
         try{
-            const users:IUser[] = await this.userModel.find();
+            const users:GetUserDTO[] = await this.userModel.find();
             return users;
         }catch (e:unknown){
             throw new HttpException("Not Found", HttpStatus.NOT_FOUND);
         }
     }
-    async getOne(id:ObjectId):Promise<IUser | HttpException>{
+    async getOne(id:ObjectId):Promise<GetUserDTO | HttpException>{
         try{
-            const user:IUser = await this.userModel.findById(id);
+            const user:GetUserDTO = await this.userModel.findById(id);
             return user;
         }catch(error:unknown){
             throw new HttpException("Not Found", HttpStatus.NOT_FOUND);
         }
     }
-    async delete(id:ObjectId):Promise<IUser | HttpException>{
+    async delete(id:ObjectId):Promise<string | HttpException>{
         try{
-            const deletedUser = await this.userModel.findById(id);
-            await deletedUser.delete();
-            return deletedUser;
+            await this.userModel.findByIdAndDelete(id);
+            return `${id}`;
         }catch(error:unknown){
             throw new HttpException("Bad Request", HttpStatus.BAD_REQUEST);
         }
     }
-    async create(createDto:CreateUserDTO):Promise<IUser | HttpException>{
+    async create(createDto:CreateUserDTO):Promise<GetUserDTO | HttpException>{
         try{
             const hashedPassword:string = await hash(createDto.password, 4);
-            const user:IUser = await this.userModel.create({...createDto, password: hashedPassword});
+            const user:GetUserDTO = await this.userModel.create({...createDto, password: hashedPassword});
             return user;
         }catch(e:unknown){
             throw new HttpException("Bad Request", HttpStatus.BAD_REQUEST);
