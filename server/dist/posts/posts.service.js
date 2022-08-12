@@ -26,7 +26,16 @@ let PostsService = class PostsService {
             return posts;
         }
         catch (e) {
-            throw new common_1.HttpException("Noy found", common_1.HttpStatus.NOT_FOUND);
+            throw new common_1.HttpException("Not found", common_1.HttpStatus.NOT_FOUND);
+        }
+    }
+    async getOne(id) {
+        try {
+            const post = await this.postModel.findById(id);
+            return post;
+        }
+        catch (e) {
+            throw new common_1.HttpException("Not found", common_1.HttpStatus.NOT_FOUND);
         }
     }
 };
