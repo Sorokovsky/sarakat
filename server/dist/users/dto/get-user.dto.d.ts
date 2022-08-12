@@ -3,4 +3,5 @@ export default interface GetUserDTO {
     name: string;
     email: string;
     avatar?: string;
+    password?: string;
 }
