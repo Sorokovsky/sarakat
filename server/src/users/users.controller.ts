@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post } from "@nestjs/common";
 import { ObjectId } from "mongoose";
-import IUser from "src/utils/interfaces/User.interface";
 import CreateUserDTO from "./dto/create-user.dto";
 import GetUserDTO from "./dto/get-user.dto";
 import UsersService from "./users.service";
