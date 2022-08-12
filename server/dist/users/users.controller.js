@@ -13,40 +13,54 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
+const users_service_1 = require("./users.service");
 let UsersController = class UsersController {
+    constructor(userService) {
+        this.userService = userService;
+    }
     getAll() {
-        return "users";
+        return this.userService.getAll();
     }
     getOne(id) {
-        return `${id}`;
+        return this.userService.getOne(id);
     }
     delete(id) {
-        return `Deleted ${id}`;
+        return this.userService.delete(id);
+    }
+    create(createDto) {
+        return this.userService.create(createDto);
     }
 };
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getAll", null);
 __decorate([
     (0, common_1.Get)(":id"),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getOne", null);
 __decorate([
     (0, common_1.Delete)(":id"),
-    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "delete", null);
+__decorate([
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "create", null);
 UsersController = __decorate([
-    (0, common_1.Controller)('/users')
+    (0, common_1.Controller)('/users'),
+    __metadata("design:paramtypes", [users_service_1.default])
 ], UsersController);
 exports.default = UsersController;
 //# sourceMappingURL=users.controller.js.map
