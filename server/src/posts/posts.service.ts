@@ -38,4 +38,12 @@ export default class PostsService{
             throw new HttpException("Bad Request", HttpStatus.BAD_REQUEST);
         }
     }
+    async delete(id:ObjectId):Promise<Post | HttpException>{
+        try{
+            const post = await this.postModel.findByIdAndDelete(id);
+            return post;
+        }catch(e:unknown){
+            throw new HttpException("Not found", HttpStatus.NOT_FOUND);
+        }
+    }
 }

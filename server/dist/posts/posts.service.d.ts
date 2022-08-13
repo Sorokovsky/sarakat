@@ -10,4 +10,5 @@ export default class PostsService {
     getAll(): Promise<Post[] | HttpException>;
     getOne(id: ObjectId): Promise<Post | HttpException>;
     create(id: ObjectId, createDto: CreatePostDto): Promise<Post | HttpException>;
+    delete(id: ObjectId): Promise<Post | HttpException>;
 }

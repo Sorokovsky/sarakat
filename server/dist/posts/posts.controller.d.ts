@@ -9,4 +9,5 @@ export default class PostsController {
     getAll(): Promise<IPost[] | HttpException>;
     getOne(id: ObjectId): Promise<IPost | HttpException>;
     create(id: ObjectId, body: CreatePostDto): Promise<IPost | HttpException>;
+    delete(id: ObjectId): Promise<IPost | HttpException>;
 }

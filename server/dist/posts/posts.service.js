@@ -54,6 +54,15 @@ let PostsService = class PostsService {
             throw new common_1.HttpException("Bad Request", common_1.HttpStatus.BAD_REQUEST);
         }
     }
+    async delete(id) {
+        try {
+            const post = await this.postModel.findByIdAndDelete(id);
+            return post;
+        }
+        catch (e) {
+            throw new common_1.HttpException("Not found", common_1.HttpStatus.NOT_FOUND);
+        }
+    }
 };
 PostsService = __decorate([
     (0, common_1.Injectable)(),

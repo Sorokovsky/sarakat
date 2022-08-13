@@ -1,4 +1,4 @@
-import { Controller, Get, Post ,HttpException, Param, Body } from "@nestjs/common";
+import { Controller, Get, Post ,HttpException, Param, Body, Delete } from "@nestjs/common";
 import { ObjectId } from "mongoose";
 import { Post as IPost } from "src/schemas/post.schema";
 import CreatePostDto from "./dto/create-post.dto";
@@ -17,5 +17,9 @@ export default class PostsController{
     @Post(':id')
     create(@Param('id') id:ObjectId, @Body() body:CreatePostDto):Promise<IPost | HttpException>{
         return this.postsService.create(id, body);
+    }
+    @Delete(":id")
+    delete(@Param('id') id:ObjectId):Promise<IPost | HttpException>{
+        return this.postsService.delete(id);
     }
 }
