@@ -24,6 +24,9 @@ let PostsController = class PostsController {
     getOne(id) {
         return this.postsService.getOne(id);
     }
+    create(id, body) {
+        return this.postsService.create(id, body);
+    }
 };
 __decorate([
     (0, common_1.Get)(),
@@ -38,6 +41,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], PostsController.prototype, "getOne", null);
+__decorate([
+    (0, common_1.Post)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], PostsController.prototype, "create", null);
 PostsController = __decorate([
     (0, common_1.Controller)("/posts"),
     __metadata("design:paramtypes", [posts_service_1.default])

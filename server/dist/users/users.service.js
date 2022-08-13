@@ -32,7 +32,7 @@ let UsersService = class UsersService {
     }
     async getOne(id) {
         try {
-            const user = await this.userModel.findById(id);
+            const user = await this.userModel.findById(id).populate("posts");
             return user;
         }
         catch (error) {

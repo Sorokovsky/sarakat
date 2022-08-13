@@ -16,9 +16,11 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const post_schema_1 = require("../schemas/post.schema");
+const user_schema_1 = require("../schemas/user.schema");
 let PostsService = class PostsService {
-    constructor(postModel) {
+    constructor(postModel, userModel) {
         this.postModel = postModel;
+        this.userModel = userModel;
     }
     async getAll() {
         try {
@@ -31,18 +33,34 @@ let PostsService = class PostsService {
     }
     async getOne(id) {
         try {
-            const post = await this.postModel.findById(id);
+            let post = await this.postModel.findById(id);
             return post;
         }
         catch (e) {
             throw new common_1.HttpException("Not found", common_1.HttpStatus.NOT_FOUND);
         }
     }
+    async create(id, createDto) {
+        try {
+            const user = await this.userModel.findById(id);
+            const post = await this.postModel.create(createDto);
+            user.posts.push(post._id);
+            post.author = user._id;
+            await user.save();
+            await post.save();
+            return post;
+        }
+        catch (e) {
+            throw new common_1.HttpException("Bad Request", common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
 };
 PostsService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(post_schema_1.Post.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], PostsService);
 exports.default = PostsService;
 //# sourceMappingURL=posts.service.js.map

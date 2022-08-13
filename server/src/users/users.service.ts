@@ -18,7 +18,7 @@ export default class UsersService {
     }
     async getOne(id:ObjectId):Promise<GetUserDTO | HttpException>{
         try{
-            const user:GetUserDTO = await this.userModel.findById(id);
+            const user:GetUserDTO = await this.userModel.findById(id).populate("posts");
             return user;
         }catch(error:unknown){
             throw new HttpException("Not Found", HttpStatus.NOT_FOUND);

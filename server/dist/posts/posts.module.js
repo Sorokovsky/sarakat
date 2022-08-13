@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const post_schema_1 = require("../schemas/post.schema");
+const user_schema_1 = require("../schemas/user.schema");
 const posts_controller_1 = require("./posts.controller");
 const posts_service_1 = require("./posts.service");
 let PostsModule = class PostsModule {
@@ -17,7 +18,7 @@ PostsModule = __decorate([
     (0, common_1.Module)({
         controllers: [posts_controller_1.default],
         providers: [posts_service_1.default],
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: post_schema_1.Post.name, schema: post_schema_1.PostSchema }])]
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: post_schema_1.Post.name, schema: post_schema_1.PostSchema }, { name: user_schema_1.User.name, schema: user_schema_1.UserSchema }])]
     })
 ], PostsModule);
 exports.default = PostsModule;
